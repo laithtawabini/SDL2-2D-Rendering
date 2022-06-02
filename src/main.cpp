@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
 		game->Update();
 		game->Render();
 
-		std::cout << "DN";
 		{
 			frameTime = SDL_GetTicks() - frameStart;
 			if (frameDelay > frameTime)
