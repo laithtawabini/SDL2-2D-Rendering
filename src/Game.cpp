@@ -8,6 +8,9 @@ SDL_Renderer* Game::renderer = nullptr;
 Manager manager;
 Map* map;
 
+auto& player(manager.addEntity());
+SDL_Event Game::event;
+
 Game::Game(std::string name, const int WIDTH, const int HEIGHT) : name(name), WIDTH(WIDTH), HEIGHT(HEIGHT)
 {
 	// Inits SDL
@@ -18,9 +21,10 @@ Game::Game(std::string name, const int WIDTH, const int HEIGHT) : name(name), WI
 	}
 	running = true;
 	map = new Map();
-	auto& player(manager.addEntity());
-	player.addComponent<PositionComponent>();
-	player.addComponent<SpriteComponent>("C:\\Dev\\SDL2\\SDL_Project_2\\SDL_Project_2\\assets\\player.png");
+	
+	player.addComponent<TransformComponent>();
+	player.addComponent<SpriteComponent>("C:\\Dev\\SDL2\\SDL_VSC\\Game\\src\\assets\\player.png");
+	player.addComponent<KeyboardController>();
 }
 
 void Game::Update()
@@ -31,15 +35,13 @@ void Game::Update()
 
 void Game::HandleEvents()
 {
-	SDL_Event input;
-	while (SDL_PollEvent(&input) != 0)
+	SDL_PollEvent(&event);
+	switch(event.type)
 	{
-		if (input.type == SDL_QUIT)
-			running = false;
-		if (input.type == SDL_KEYDOWN)
-		{
-			
-		}
+		case SDL_QUIT:
+			running = false; break;
+		default:
+			break;
 	}
 }
 

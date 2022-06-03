@@ -5,8 +5,8 @@
 class SpriteComponent : public Component
 {
 private:
-	PositionComponent *position;
-	SDL_Texture *texture;
+	TransformComponent* transform;
+	SDL_Texture* texture;
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
 
@@ -19,7 +19,7 @@ public:
 
 	void init() override
 	{
-		position = &entity->getComponent<PositionComponent>();
+		transform = &entity->getComponent<TransformComponent>();
 		srcRect.x = srcRect.y = 0;
 		srcRect.w = srcRect.h = 32;
 
@@ -28,14 +28,17 @@ public:
 
 	void update() override
 	{
-		if (position == NULL)
-			return;
-		destRect.x = position->getX();
-		destRect.y = position->getY();
+		destRect.x = (int) transform->position.x;
+		destRect.y = (int) transform->position.y;
 	}
 
 	void draw() override
 	{
 		TextureHandler::Draw(texture, srcRect, destRect);
+	}
+
+	void setTexture(const char* path)
+	{
+		texture = TextureHandler::CreateTexture(path);
 	}
 };

@@ -9,6 +9,7 @@ class Game
 public:
 	static SDL_Surface *surface;
 	static SDL_Renderer *renderer;
+	static SDL_Event event;
 
 public:
 	Game(std::string name, const int WIDTH, const int HEIGHT);
